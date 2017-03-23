@@ -65,7 +65,120 @@ public class TrieTest {
     private static String test = "test";
     private static String dude = "dude";
 
-    public class NoDoubleDeleteMapDB extends HashMapDB<byte[]> {
+
+
+    public static void addAndPrint(TrieImpl trie,String key, String value){
+
+
+        // d maps to a byte of 100
+
+
+        trie.put(key.getBytes(),value.getBytes());
+        System.out.println("***********NEW TRIE AFTER ADDING "+key+" ("+toHex(key)+") ,"+value+" *********************");
+        System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
+        System.out.println(trie.dumpTrie());
+
+    }
+
+    public static void addAndPrint(TrieImpl trie,byte[] key, byte[] value){
+
+
+        // d maps to a byte of 100
+
+
+        trie.put(key,value);
+        System.out.println("***********NEW TRIE AFTER ADDING "+key+"  ,"+value+" *********************");
+        System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
+        System.out.println(trie.dumpTrie());
+
+    }
+
+    public static void addAndPrintHexString(TrieImpl trie,String hexString){
+
+
+        // d maps to a byte of 100
+
+
+        trie.put(new BigInteger(hexString,16).toByteArray(),new BigInteger(hexString,16).toByteArray());
+
+        System.out.println("***********NEW TRIE AFTER ADDING "+hexString+"  ,"+hexString+" *********************");
+        System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
+        System.out.println(trie.dumpTrie(false));
+
+    }
+
+
+    public static void removeAndPrintHexString(TrieImpl trie,String hexString){
+
+
+        // d maps to a byte of 100
+
+
+        trie.delete(new BigInteger(hexString,16).toByteArray());
+
+        System.out.println("***********NEW TRIE AFTER ADDING "+hexString+"  ,"+hexString+" *********************");
+        System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
+        System.out.println(trie.dumpTrie(false));
+
+    }
+
+
+    public static String toHex(String arg) {
+        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/))).replaceFirst("^0+(?!$)", "");
+
+        // return String.format("x",new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
+    }
+
+
+
+
+
+    public static void main(String[] args){
+        System.out.println("boom");
+
+        NoDoubleDeleteMapDB mockDb = new NoDoubleDeleteMapDB();
+
+        TrieImpl trie = new TrieImpl(mockDb);
+
+
+        addAndPrintHexString(trie,"64576543");
+        addAndPrintHexString(trie,"6445");
+        addAndPrintHexString(trie,"644567775");
+
+        // removeAndPrintHexString(trie,"6");
+
+
+        addAndPrint(trie,"dogih", "dogih");
+        addAndPrint(trie,"dogih", "dogih");
+        addAndPrint(trie,"dogih", "dogih");
+        addAndPrint(trie,"dogih", "dogih");
+
+        addAndPrint(trie,"dogih", "dogih");
+        addAndPrint(trie,"dogik", "dogik");
+        addAndPrint(trie,"dohep", "dohep");
+
+
+        addAndPrint(trie,"do", "do");
+
+
+        addAndPrint(trie,"do", "do");
+        addAndPrint(trie,"dog","dog");
+        addAndPrint(trie,"doge","doge");
+        addAndPrint(trie,"doggie","doggie");
+        addAndPrint(trie,"dogmatic","dogmatic");
+
+        addAndPrint(trie,"mouse","mouse");
+        addAndPrint(trie,"bat","bat");
+        addAndPrint(trie,"rhubarb","rhubarb");
+        addAndPrint(trie,"apple","apple");
+
+
+
+
+    }
+
+
+    public static class NoDoubleDeleteMapDB extends HashMapDB<byte[]> {
         @Override
         public synchronized void delete(byte[] key) {
             if (storage.get(key) == null) {
@@ -84,7 +197,7 @@ public class TrieTest {
         public NoDoubleDeleteMapDB getDb() {return (NoDoubleDeleteMapDB) getSource();}
     }
 
-//    public TrieCache mockDb = new TrieCache();
+    //    public TrieCache mockDb = new TrieCache();
 //    public TrieCache mockDb_2 = new TrieCache();
     public NoDoubleDeleteMapDB mockDb = new NoDoubleDeleteMapDB();
     public NoDoubleDeleteMapDB mockDb_2 = new NoDoubleDeleteMapDB();
@@ -108,7 +221,7 @@ public class TrieTest {
     };
 
 
-//    private static class StringTrie extends SourceCodec<String, String, byte[], byte[]> {
+    //    private static class StringTrie extends SourceCodec<String, String, byte[], byte[]> {
 //        public StringTrie(Source<byte[], Value> src) {
 //            this(src, null);
 //        }
@@ -155,16 +268,16 @@ public class TrieTest {
             return ret == null ? "" : ret;
         }
 
-    @Override
-    public void put(String s, String val) {
-        if (val == null || val.isEmpty()) {
-            super.delete(s);
-        } else {
-            super.put(s, val);
+        @Override
+        public void put(String s, String val) {
+            if (val == null || val.isEmpty()) {
+                super.delete(s);
+            } else {
+                super.put(s, val);
+            }
         }
-    }
 
-    @Override
+        @Override
         public boolean equals(Object obj) {
             return getSource().equals(((StringTrie) obj).getSource());
         }
