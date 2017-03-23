@@ -141,36 +141,11 @@ public class TrieTest {
         TrieImpl trie = new TrieImpl(mockDb);
 
 
-        addAndPrintHexString(trie,"64576543");
+        addAndPrintHexString(trie,"64676543");
         addAndPrintHexString(trie,"6445");
         addAndPrintHexString(trie,"644567775");
 
         // removeAndPrintHexString(trie,"6");
-
-
-        addAndPrint(trie,"dogih", "dogih");
-        addAndPrint(trie,"dogih", "dogih");
-        addAndPrint(trie,"dogih", "dogih");
-        addAndPrint(trie,"dogih", "dogih");
-
-        addAndPrint(trie,"dogih", "dogih");
-        addAndPrint(trie,"dogik", "dogik");
-        addAndPrint(trie,"dohep", "dohep");
-
-
-        addAndPrint(trie,"do", "do");
-
-
-        addAndPrint(trie,"do", "do");
-        addAndPrint(trie,"dog","dog");
-        addAndPrint(trie,"doge","doge");
-        addAndPrint(trie,"doggie","doggie");
-        addAndPrint(trie,"dogmatic","dogmatic");
-
-        addAndPrint(trie,"mouse","mouse");
-        addAndPrint(trie,"bat","bat");
-        addAndPrint(trie,"rhubarb","rhubarb");
-        addAndPrint(trie,"apple","apple");
 
 
 
