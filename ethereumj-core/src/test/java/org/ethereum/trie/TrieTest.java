@@ -80,6 +80,10 @@ public class TrieTest {
 
     }
 
+
+    private static List<String> keys = new ArrayList<String>();
+
+
     public static void addAndPrint(TrieImpl trie,byte[] key, byte[] value){
 
 
@@ -98,12 +102,19 @@ public class TrieTest {
 
         // d maps to a byte of 100
 
-
+        keys.add(hexString);
         trie.put(new BigInteger(hexString,16).toByteArray(),new BigInteger(hexString,16).toByteArray());
 
         System.out.println("***********NEW TRIE AFTER ADDING "+hexString+"  ,"+hexString+" *********************");
+
+        for (String s:keys){
+            System.out.println(s);
+        }
+
+
         System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
         System.out.println(trie.dumpTrie(false));
+
 
     }
 
@@ -115,10 +126,15 @@ public class TrieTest {
 
 
         trie.delete(new BigInteger(hexString,16).toByteArray());
+        keys.remove(hexString);
+        for (String s:keys){
+            System.out.println(s);
+        }
 
         System.out.println("***********NEW TRIE AFTER ADDING "+hexString+"  ,"+hexString+" *********************");
         System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
         System.out.println(trie.dumpTrie(false));
+
 
     }
 
@@ -141,13 +157,47 @@ public class TrieTest {
         TrieImpl trie = new TrieImpl(mockDb);
 
 
-        addAndPrintHexString(trie,"64676543");
-        addAndPrintHexString(trie,"6445");
-        addAndPrintHexString(trie,"644567775");
+        addAndPrintHexString(trie,"1");
 
-        // removeAndPrintHexString(trie,"6");
+        /*
+        [<01T>, "01"]
+        0xbb0a9dc519f763a6ffa8b82bc000baab4c8015d20ff830c548ea9cd857ea42cf ==> [<01T>, "01"]
+        T is there because it is a terminal node where the value refers to the value itself
+
+        */
+        removeAndPrintHexString(trie,"1");
+
+        addAndPrintHexString(trie,"11");
+        /*
+        0xd1eb01b19608d0e0f194f9b315ed9cf3fa36fa72eb54a50958131e4b566e647b ==> [<11T>, "11"]
+        Again a termianl node but now with no padding zero
+         */
+        removeAndPrintHexString(trie,"11");
+        addAndPrintHexString(trie,"111");
+        /*
+        0x68a5e1f4afa32b4a9587a6db3f2633625f12f579f8b48cf645afb3f747651ba3 ==> [<0111T>, "0111"]
+        since the key was an odd number of nibble
+         */
+        removeAndPrintHexString(trie,"111");
 
 
+        addAndPrintHexString(trie,"12");
+        /*
+        0x0c652c71b2d4d2cfd246154494e10a7640e5429f811de713f2a43e7b4d427699 ==> [<12T>, "12"]
+         */
+        addAndPrintHexString(trie,"123");
+        addAndPrintHexString(trie,"124");
+        /*
+        0x5602ddd9954cffe6eebe81764edfa8159b349b4c66790d54ad134d9bd8ccc714 ==> [[<12>, [,,,[<T>, "0123"],[<T>, "0124"],,,,,,,,,,,]],[<2T>, "12"],,,,,,,,,,,,,,]
+        */
+        addAndPrintHexString(trie,"12345");
+        addAndPrintHexString(trie,"12346");
+
+
+
+        /*
+        0x910e3d9efa3c5c22cbd36454125938c7d3e38bab2d24630ffea38d19e545a286 ==> br[0[<12>, br[0,1,2,3[<T>, "0123"],4[<T>, "0124"],5,6,7,8,9,10,11,12,13,14,15]],1[<2>, br[0,1,2,3[<4T>, "1234"],4,5,6,7,8,9,10,11,12,13,14,15, "12"]],2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+         */
 
 
     }
