@@ -399,19 +399,21 @@ public class TrieImpl implements Trie<byte[]> {
             return ret;
         }
 
+
+
         private String dumpContent(boolean recursion, boolean compact) {
             if (recursion && hash != null) return hash2str(hash, compact);
             String ret;
             if (getType() == NodeType.BranchNode) {
-                ret = "[";
+                ret = "<br[";
                 for (int i = 0; i < 16; i++) {
                     Node child = branchNodeGetChild(i);
-                    ret += i == 0 ? "" : ",";
+                    ret += (i == 0 ? "" : ",") +i;
                     ret += child == null ? "" : child.dumpContent(true, compact);
                 }
                 byte[] value = branchNodeGetValue();
                 ret += value == null ? "" : ", " + val2str(value, compact);
-                ret += "]";
+                ret += "]/br>";
             } else if (getType() == NodeType.KVNodeNode) {
                 ret = "[<" + kvNodeGetKey() + ">, " + kvNodeGetChildNode().dumpContent(true, compact) + "]";
             } else {
