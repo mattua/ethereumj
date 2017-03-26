@@ -180,6 +180,10 @@ public final class TrieKey {
 
     @Override
     public String toString() {
-        return Hex.toHexString(key).substring(off) + (isTerminal() ? "T" : "");
+
+        String s = Hex.toHexString(key).substring(off);
+
+
+        return s + (isTerminal() ? "T" : "");
     }
 }
