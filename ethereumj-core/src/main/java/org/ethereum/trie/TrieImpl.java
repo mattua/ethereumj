@@ -730,6 +730,8 @@ public class TrieImpl implements Trie<byte[]> {
 
     private static String val2str(byte[] val, boolean shortHash) {
         String ret = Hex.toHexString(val);
+
+        ret = new String(val);
         if (val.length > 16) {
             ret = ret.substring(0,10) + "... len " + val.length;
         }
