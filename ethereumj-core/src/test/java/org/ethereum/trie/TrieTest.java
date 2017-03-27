@@ -118,7 +118,26 @@ public class TrieTest {
 
     }
 
+    public static void addAndPrintHexStringValues(TrieImpl trie,String hexString,String value){
 
+
+        // d maps to a byte of 100
+
+        keys.add(hexString);
+        trie.put(new BigInteger(hexString,16).toByteArray(),value.getBytes());
+
+        System.out.println("***********NEW TRIE AFTER ADDING "+hexString+"  ,"+hexString+" *********************");
+
+        for (String s:keys){
+            System.out.println(s);
+        }
+
+
+        System.out.println("NEW ROOT: " +trie.getRootHash().hashCode());
+        System.out.println(trie.dumpTrie(false));
+
+
+    }
     public static void removeAndPrintHexString(TrieImpl trie,String hexString){
 
 
@@ -155,6 +174,12 @@ public class TrieTest {
         NoDoubleDeleteMapDB mockDb = new NoDoubleDeleteMapDB();
 
         TrieImpl trie = new TrieImpl(mockDb);
+
+        addAndPrintHexStringValues(trie,"a711355","45.0 ETH");
+        addAndPrintHexStringValues(trie,"a77d337","1.00 WEI");
+        addAndPrintHexStringValues(trie,"a7f9365","1.1 ETH");
+        addAndPrintHexStringValues(trie,"a77d397","0.12 ETH");
+
 
 
         addAndPrintHexString(trie,"1");
