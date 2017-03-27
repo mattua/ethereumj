@@ -408,7 +408,7 @@ public class TrieImpl implements Trie<byte[]> {
                 ret = "<br[";
                 for (int i = 0; i < 16; i++) {
                     Node child = branchNodeGetChild(i);
-                    ret += (i == 0 ? "" : ",") +i;
+                    ret += (i == 0 ? "" : ",") +"("+i+")";
                     ret += child == null ? "" : child.dumpContent(true, compact);
                 }
                 byte[] value = branchNodeGetValue();
