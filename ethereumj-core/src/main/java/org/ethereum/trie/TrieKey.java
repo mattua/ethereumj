@@ -22,7 +22,7 @@ import org.spongycastle.util.encoders.Hex;
 import static org.ethereum.util.ByteUtil.EMPTY_BYTE_ARRAY;
 
 /**
- * Created by Anton Nashatyrev on 13.02.2017.
+ * Created by Anton Nashatyrev on 13.02.2017.to
  */
 public final class TrieKey {
     public static final int ODD_OFFSET_FLAG = 0x1;
@@ -67,6 +67,20 @@ public final class TrieKey {
         ret[0] &= 0x0F;
         ret[0] |= flags << 4;
         return ret;
+    }
+
+    public String toPackedHexString() {
+
+        return bytesToHex(toPacked());
+
+    }
+
+    public static String bytesToHex(byte[] in) {
+        final StringBuilder builder = new StringBuilder();
+        for(byte b : in) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
     }
 
     public byte[] toNormal() {
@@ -184,6 +198,6 @@ public final class TrieKey {
         String s = Hex.toHexString(key).substring(off);
 
 
-        return s + (isTerminal() ? "T" : "");
+        return s + (isTerminal() ? "T" : "") +"("+toPackedHexString()+")";
     }
 }
