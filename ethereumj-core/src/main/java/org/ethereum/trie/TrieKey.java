@@ -197,7 +197,7 @@ public final class TrieKey {
 
         String s = Hex.toHexString(key).substring(off);
 
-        return toPackedHexString();
+        return toPackedHexString()+(isTerminal() ? "(T)" : "");
 
         //return s + (isTerminal() ? "T" : "") +"("+toPackedHexString()+")";
     }
